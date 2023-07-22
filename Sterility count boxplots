@@ -1,0 +1,32 @@
+library (ggpubr)
+remove.packages("ggpubr")
+install.packages("ggpubr")
+library("ggpubr")
+install.packages("vctrs")
+library("vctrs")
+
+getwd()
+sky<- read.csv("sky_sterile.csv")
+df <- data.frame(sky)
+ggboxplot(data,"Tray", "No.Seed.set", combine= FALSE, merge = FALSE)
+
+s2 <- ggboxplot(df, x="Tray", y = "No.Seed.set", color = "Treatment....", palette= c("#E7B802","#FC4E07","#00AFBB"), ylab=" No. of seed set", xlab = "Skyfall Tray numbers")+
+  stat_summary(fun.y = "mean", size = 0.2)
+
+S3 <- s2+labs(color = "Treatment (%)")+
+  theme(legend.position = "right")
+S3
+
+Howley <- read.csv("Howley sterility counts.csv")
+df_H <-data.frame(Howley)
+ggboxplot(df_H,"Tray", "No.Seed.set", combine= FALSE, merge = FALSE)
+
+H2 <- ggboxplot(df_H, x="Tray", y = "No.Seed.set", color = "Treatment....", palette= c("#FF3366","#330066","#00AFBB"), ylab=" No. of seed set", xlab = "Howley Tray numbers")+
+  stat_summary(fun.y = "mean", size = 0.2)
+
+h3 <- H2+labs(color = "Treatment (%)")+
+  theme(legend.position = "right")
+h3
+
+library("gridExtra")
+grid.arrange(s3,h3, ncol=2,2)
